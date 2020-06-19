@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+<div class="container">
+    <div class="row">
+        <section class="col-md-12">
+            <h1 class="page-header">Live Report</h1>
+            <br>
+            <!-- Table content -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="content" >
+                            <thead>
+                            <tr>
+                                <th style="text-align:center;">Date</th>
+                                <th style="text-align:center;">Time</th>
+                                <th style="text-align:center;">Rain Fall</th>
+                                <th style="text-align:center;">PM2.5</th>
+                                <th style="text-align:center;">PM10</th>
+                                <th style="text-align:center;">Humidity</th>
+                                <th style="text-align:center;">Temperature</th>
+                                <th style="text-align:center;">Wind Speed</th>
+                                <th style="text-align:center;">Wind Direction</th>
+                                <th style="text-align:center;">SO<sub>2</sub></th>
+                                <th style="text-align:center;">NO<sub>2</sub></th>
+                                <th style="text-align:center;">CO</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td><input disabled type="text" id="modified_date" class="form-control" style="width:120px;text-align:center;" value="{{ start.modified_date}}"></td>
+                                    <td><input disabled type="text" id="modified_time" class="form-control" style="width:90px;text-align:center;" value="{{ start.modified_time}}"></td>
+                                    <td><input disabled type="text" id="rain_gauge" class="form-control" style="text-align:center;width:70px;" value="{{ start.rain_gauge }}"></td>
+                                    <td><input disabled type="text" id="pm2_5" class="form-control" style="text-align:center;width:70px;" value="{{ start.pm2_5 }}"></td>
+                                    <td><input disabled type="text" id="pm10" class="form-control" style="text-align:center;width:70px;" value="{{ start.pm10 }}"></td>
+                                    <td><input disabled type="text" id="humidity" class="form-control" style="text-align:center;width:70px;" value="{{ start.humidity }}"></td>
+                                    <td><center><input disabled type="text" id="temperature" class="form-control" style="text-align:center;width:70px;" value="{{ start.temperature }}"></center></td>
+                                    <td><input disabled type="text" id="ws_value" class="form-control" style="text-align:center;width:70px;" value="{{ start.ws_value }}"></td>
+                                    <td><input disabled type="text" id="wd_value" class="form-control" style="text-align:center;width:70px;" value="{{ start.wd_value }}"></td>
+                                    <td><input disabled type="text" id="so2" class="form-control" style="text-align:center;width:70px;" value="{{ start.so2 }}"></td>
+                                    <td><input disabled type="text" id="no2" class="form-control" style="text-align:center;width:70px;" value="{{ start.no2 }}"></td>
+                                    <td><input disabled type="text" id="co" class="form-control" style="text-align:center;width:70px;" value="{{ start.co }}"></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                      <div class="text-center">
+                        <input class="btn btn-primary"hidden onclick="myFunction()" type="button" id="id_print" value="Print"/>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </div><!--end Table content -->
+            <div id="a">
+            </div>
+
+
+        </section>
+    </div>
+</div>
+<script>
+
+$(document).ready(function(){
+    //--------3-sec Function Start----------
+setInterval(function()
+{
+    <!--alert("axsw");-->
+    //call ajax
+    $("#miner_body").html("");
+    $.ajax({
+          url: "/wm_test/get_data_from_node_mcu",
+        success: function(data) {
+                   //alert(data.result[0]);
+                   console.log(data.result);
+                   //var res= new array();
+                   res=data.result[0].split(",");
+                   console.log(res[0]);
+                   var date=res[0];
+                   //alert(date);
+                   var sdate = date.split(" ");
+                   var split_date = sdate[0];
+                   var split_time = sdate[1];
+                   //alert(splitdate);
+                   //alert(split_ime);
+                   var split_date =split_date.split("-");
+                   var mon = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                   var year = split_date[0];
+                   var month = split_date[1];
+                   var day = split_date[2];
+                   var newDate = day + " " + mon[month - 1] + " " + year;
+                   //console.log(newDate.result);
+                   //alert(newDate);
+                   var split_time =split_time.split(":");
+                   //alert(split_time);
+                   var hh=split_time[0];
+                   //alert(hh);
+                   var mm=split_time[1];
+                   //alert(mm);
+                    var ss=split_time[2];
+                    //alert(ss);
+                    var ampm = hh >= 12 ? 'pm' : 'am';
+                    //alert(ampm)
+                    hh = hh % 12;
+                    //alert(hh)
+                    mm = mm < 10 ? '0'+mm : mm;
+                    //alert(mm)
+                    var newTime = hh + ":" + mm + " " + ampm;
+                    //alert(newTime);
+
+
+               $("#modified_date").val(newDate);
+               $("#modified_time").val(newTime);
+               $("#rain_gauge").val(res[1]+" mm");
+               $("#pm2_5").val(res[2]+" ug/m3");
+               $("#pm10").val(res[3]+" ug/m3");
+               $("#humidity").val(res[4]+" percentage");
+               $("#temperature").val(res[5]+" celvin");
+               $("#ws_value").val(res[6]+" m/s");
+               $("#wd_value").val(res[7]+" degree");
+               $("#so2").val(res[8]+" ug/m3");
+               $("#no2").val(res[9]+" ug/m3");
+               $("#co").val(res[10]+" mg/m3");
+
+
+               $("#id_print").show(); 
+               //  return data;
+            }
+        //document.tbody.backgroundColor = x.style.backgroundColor == "yellow" ? "pink" : "yellow";
+
+
+        });
+    //end call ajax
+
+}, 3000);//time in milliseconds
+
+//--------3-sec Function End----------
+});
+
+function myFunction() {
+  window.print();
+}
+
+
+</script>
+
+{% endblock %}
+
+
+

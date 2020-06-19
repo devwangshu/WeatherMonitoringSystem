@@ -1,0 +1,27 @@
+{% extends "login_base.html" %}
+{% block title %} Login {% endblock %}
+
+{% block main %}
+<div class="row">
+		<div class="col-md-4">&nbsp;</div><div class="col-md-4">&nbsp;</div>
+		<div class="col-md-4" style="background:rgba(0,0,0,0.5); color:#fff; box-shadow: 0 4px 8px 0 rgba(0,0,0,5), 0 2px 4px 0 rgba(0,0,0,0.08); margin-top: 7%;">
+			<br>
+			<h3 align="center"><span class="icon fa fa-users" aria-hidden="true"></span> LOGIN </h3>
+			<br>
+			<form method="post">
+			    {% csrf_token %}
+			    <input type="hidden" name="next" value="{{ next }}" />
+		    		{% include 'form.html' %}
+					{% if user.is_authenticated %}
+					<!-- <button type="submit" style="margin-left:40%;" class="btn btn-danger"><a href="/accounts/logout">Logout</a></button> -->
+					{% else %}
+					<!-- <button type="submit" style="margin-left:40%;" class="btn btn-primary"><a class="link-color" href="/accounts/login">Login</a></button> -->
+					{% endif %}
+					{% block extraheader %}{% endblock %}
+					<button type="submit" style="margin-left:40%;" class="btn btn-primary">Login</button>
+			</form>
+			<br><br>
+		</div>
+		<div class="col-md-4">&nbsp;</div>	
+</div>
+{% endblock %}

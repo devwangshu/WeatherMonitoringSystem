@@ -1,0 +1,42 @@
+{% load staticfiles %}
+<html>
+<head>
+    <title>{% block title %}{% endblock %} - Weather Monitoring System | CSIR-CIMFR</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static 'extra/frontend/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts_styles/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{% static 'accounts_styles/style.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts_styles/my_accounts_style.css' %}">
+</head>
+<style type="text/css">
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #000;
+        color: #D3D3D3;
+        text-align: center;
+        padding-top: 10px;
+    }
+    .footer p a{ color: #FFF; }
+</style>
+<body class="abc">
+    <nav class="navbar bg-primary">
+        <div class="container justify-content-between">
+            <a href="/" class="navbar-brand navbar-brand-login"><img src="{% static '/image/cimfr_logo.jpg' %}" height="50" width="50" /> &nbsp;&nbsp; Weather Monitoring System | CSIR-CIMFR </a>
+        </div>
+    </nav>
+<main>
+    <div class="container">
+        {% block main %}{% endblock %}
+    </div>
+</main>
+<div class="footer">
+  <p class="pwd-by">Powered By <a href="http://www.cimfr.nic.in/" target="_blank" title="CSIR-CIMFR"> CSIR-CIMFR </a> | Copyright Protected | All Rights Reserved.</p>
+</div>
+<script src="{% static 'accounts_styles/jquery-3.2.1.slim.min.js' %}"></script>
+<script src="{% static 'accounts_styles/popper.min.js' %}"></script>
+<script src="{% static 'accounts_styles/bootstrap.min.js' %}"></script>
+</body>
+</html>

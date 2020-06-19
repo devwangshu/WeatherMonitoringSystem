@@ -1,0 +1,314 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .margin_top{
+     margin-top: 15px;
+    }
+</style>
+<div class="container">
+    
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <div class="row">
+        <section class="col-md-12">
+            <h1 class="page-header">Wind Class Frequency Distribution Graph</h1>
+            
+        <div class="form-border">
+                <div class="row">
+
+                    <form class="form-horizontal" method="post" enctype="multipart/form-data">{% csrf_token %}
+
+                        <br><br>
+
+                        <div class="form-group col-md-12">
+                            <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <label for="from_date" class="">From Date</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control datepicker" id="date1">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <label for="to_date" class="">To Date</label>
+                                    </label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control datepicker" id="date2">
+                                </div>
+                            </div>
+                        </div>
+
+                        <br/><br/>
+                        <br/><br/>
+
+                        <div class="form-group col-md-12">
+
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="text-center">
+                                        <input class="btn btn-primary" type="button" id="id_show" value="Show"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div><!--end Table content -->                
+          </section>
+        </div>
+</div>
+
+<br>
+<br>
+
+<div class="container">
+    <div class="row">
+        <section class="col-md-12">
+            <!-- Table content -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="content">
+              <tbody id="results"></tbody>
+                        </table>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </div>
+            <!--end Table content -->
+        </section>
+  </div>
+</div>
+
+<style>
+    fieldset.scheduler-border {
+    border: solid 1px #DDD !important;
+    padding: 0 10px 10px 10px;
+    border-bottom: none;
+}
+
+legend.scheduler-border {
+    width: auto !important;
+    border: none;
+    font-size: 14px;
+}
+fieldset ul {list-style:none}
+
+.form-border{
+      box-sizing: border-box;
+  border: 2px solid #DDD;
+  border-radius: 4px;
+      padding: 0 30px 10px 30px;
+}
+</style>
+    </div>
+</div>
+<div class="container-fluid">
+   <div id="graphDiv"></div>
+</div>
+<div id="graphDiv"></div>
+<div class="text-center">
+    <input class="btn btn-primary"hidden onclick="myFunction()" type="button" id="id_print" value="Print"/>
+        </div>
+        <br>
+        <br>
+        <br>
+<div id="a">
+</div>
+
+<script>
+function max(input) 
+{
+    if (toString.call(input) !== "[object Array]")  
+      return false;
+return Math.max.apply(null, input);
+}
+
+$('#my').click(function()
+   {
+    alert('9\xB0');
+    });
+
+$(function() {
+    $( "#date1" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "1900:2020",
+      // You can put more options here.
+
+    });
+  });
+
+$(function() {
+    $( "#date2" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "1900:2020",
+      // You can put more options here.
+    });
+  });
+
+$(function() {
+    $( "#date1" ).datepicker({
+      format: 'dd-mm-yyyy'
+      // You can put more options here.
+    });
+  });
+
+$(function() {
+    $( "#date2" ).datepicker({
+      format: 'dd-mm-yyyy'
+      // You can put more options here.
+    });
+  });
+
+
+$("#id_show").click(function(){
+    var date1 =$('#date1').val();
+    //alert(date1);
+    var date2=$('#date2').val();
+    //alert(date2);
+    var tym=00;
+    var split_date1 =date1.split("/");
+    var year1 = split_date1[2];
+    var month1 = split_date1[0];
+    var day1 = split_date1[1];
+    var newDate1 = year1 + "-" + month1 + "-" + day1;
+   // alert(newDate1);
+    var split_date2 =date2.split("/");
+    var year2 = split_date2[2];
+    var month2 = split_date2[0];
+    var day2 = split_date2[1];
+    var newDate2 = year2 + "-" + month2 + "-" + day2;
+    //alert(newDate2);
+    var new_date1=newDate1+" "+tym+tym+":"+tym+tym+":"+tym+tym+"."+tym+tym+tym+tym+tym+tym;
+    var new_date2=newDate2+" "+'2'+'3'+":"+'5'+'9'+":"+'5'+'9'+"."+tym+tym+tym+tym+tym+tym;
+   // alert(new_date1)
+   // alert(new_date2)
+
+
+var layout = {
+  title: '      <b>WIND CLASS FREQUENCY DISTRIBUTION</b>',
+  font: {size: 16},
+  legend: {font: {size: 16}},
+  showlegend: true,
+  "barmode": "relative", 
+  "legend": {"tracegroupgap": 0}, 
+  "margin": {"t": 60}, 
+   
+  "xaxis": {"anchor": "y", "domain": [0.0, 1.0], 
+  "title": {"text": "Wind Class (m/s)"}}, 
+  "yaxis": {"anchor": "x", "domain": [0.0, 1.0], 
+  "title": {"text": "Frequency (%)"}}
+  } 
+
+
+  
+          $.ajax({
+                    url: "{% url 'wm_test:fetch_show_frequency_distribution_reportnormalised_bar_graph_ajax' %}",
+                data: {
+                         'from_date':new_date1,
+                         'to_date':new_date2,
+                       },
+                    success: function(data) {
+                      data=data.result;
+                      data=data[0];
+                      
+                    
+                      data=data.split(",");
+                      console.log(data);
+                      Graphdatar1=[];
+                      Graphdatar2=[];
+                      Graphdatar3=[];
+                      Graphdatar4=[];
+                      Graphdatar5=[];
+                      Graphdatar6=[];
+                      Graphdatar7=[];
+                      for (d in data) {
+                        temp=parseFloat(data[d]);
+                          if(d%7==0){
+                              Graphdatar1.push(parseFloat(data[d]))
+                          }
+                          else if(d%7==1){
+                              Graphdatar2.push(parseFloat(data[d]))
+                          }
+                          else if(d%7==2){
+                              Graphdatar3.push(parseFloat(data[d]))
+                          }
+                          else if(d%7==3){
+                              Graphdatar4.push(parseFloat(data[d]))
+                          }
+                          else if(d%7==4){
+                              Graphdatar5.push(parseFloat(data[d]))
+                          }
+                          else if(d%7==5){
+                              Graphdatar6.push(parseFloat(data[d]))
+                          }
+                          else if(d%7==6){
+                              Graphdatar7.push(parseFloat(data[d]))
+                          }
+                        }
+
+temp = [max(Graphdatar1), max(Graphdatar2), max(Graphdatar3), max(Graphdatar4), max(Graphdatar5), max(Graphdatar6), max(Graphdatar7)];
+                    
+                      console.log(max(Graphdatar1));
+                      console.log(max(Graphdatar2));
+                      console.log(max(Graphdatar3));
+                      console.log(max(Graphdatar4));
+                      console.log(max(Graphdatar5));
+                      console.log(max(Graphdatar6));
+                      console.log(max(Graphdatar7));
+
+Plotly.newPlot("graphDiv", [{
+  "alignmentgroup": "True", 
+  "hovertemplate": "wind class (m/s)= %{x}<br>%= %{text}<extra></extra>", 
+  "legendgroup": "", 
+  "marker": {"color": " #E53C38"}, 
+  "name": "Frequency(%)", 
+  "offsetgroup": "", 
+  "orientation": "v", 
+  "showlegend": true, 
+  "text": temp, 
+  "textposition": "inside", 
+  "texttemplate": "%{text:.4s}", 
+  "type": "bar", 
+  "x": ["Calms", "0.5-2.1", "2.1-3.6", "3.6-5.7", "5.7-8.8", "8.8-11.1", ">=11.1"], 
+  "xaxis": "x", 
+  "y": temp, 
+  "yaxis": "y"}], layout);
+                          
+                          $("#id_print").show();
+
+                          }
+                      
+                    
+            });
+                        
+                                              
+                    
+});
+                    
+              
+function myFunction() {
+  window.print();
+}
+
+
+ </script>
+
+</body>
+</html>   
+
+</script>
+<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+
+{% endblock %}

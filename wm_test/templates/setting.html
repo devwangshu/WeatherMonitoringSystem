@@ -1,0 +1,400 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load staticfiles %}
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+
+<div class="container">
+    <div class="row">
+        <section class="col-md-12">
+            <h1 class="page-header">Sensor Setting
+                <small>&nbsp&nbsp&nbspHere you can add/edit sensor details</small>
+            </h1>
+            <!-- Table content -->
+            <div class="form-border">
+                <div class="row">
+
+                    <form class="form-horizontal" method="post" enctype="multipart/form-data">{% csrf_token %}
+
+                        <br>
+
+                        <div class="form-group col-md-12">
+                            <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <label for="ip_address" class="" onload="show_data" id="">IP Address</label>
+                                </div>
+                                <div class="col-md-8">
+
+                                    {{form.ip_address}}
+
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+
+                            </div>
+                        </div>
+
+                        <br><br><br>
+
+
+                        <fieldset class="scheduler-border">
+                            <legend class="scheduler-border"><font color="blue">&nbsp; Wind Direction &nbsp;</font></legend>
+                            <div class="form-group col-md-12">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label for="wd_sensor_name" class="" id="">Sensor Name</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{form.wd_sensor_name}}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="col-md-2">
+                                        <label for="wd_unit" class="" id="box1">Unit</label>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{form.wd_unit}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <b> from North</b>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </fieldset>
+
+                        <br>
+
+                        <fieldset class="scheduler-border">
+                            <legend class="scheduler-border"><font color="blue"> Wind Speed</font></legend>
+                            <div class="form-group col-md-12">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label for="ws_sensor_name" class="" id="">Sensor Name</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{form.ws_sensor_name}}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="col-md-2">
+                                        <label for="ws_unit" class="" id="">Unit</label>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{form.ws_unit}}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </fieldset>
+
+                        <br>
+
+
+                        <fieldset class="scheduler-border">
+                            <legend class="scheduler-border"><font color="blue"> Rain Guage</font></legend>
+                            <div class="form-group col-md-12">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label for="rg_sensor_name" class="" id="">Sensor Name</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{form.rg_sensor_name}}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="col-md-2">
+                                        <label for="rg_unit" class="" id="">Unit</label>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{form.rg_unit}}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </fieldset>
+
+                        <br>
+
+                        <fieldset class="scheduler-border">
+                            <legend class="scheduler-border"><font color="blue"> PM2.5</font></legend>
+                            <div class="form-group col-md-12">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label for="pm2_5_sensor_name" class="" id="">Sensor Name</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{form.pm2_5_sensor_name}}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="col-md-2">
+                                        <label for="pm2_5_unit" class="" id="">Unit</label>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{form.pm2_5_unit}}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </fieldset>
+
+                        <br>
+
+                        <fieldset class="scheduler-border">
+                            <legend class="scheduler-border"><font color="blue"> PM10</font></legend>
+                            <div class="form-group col-md-12">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label for="pm10_sensor_name" class="" id="">Sensor Name</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{form.pm10_sensor_name}}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="col-md-2">
+                                        <label for="pm10_unit" class="" id="">Unit</label>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{form.pm10_unit}}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </fieldset>
+
+                        <br>
+
+                        <fieldset class="scheduler-border">
+                            <legend class="scheduler-border"><font color="blue"> Humidity</font></legend>
+                            <div class="form-group col-md-12">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label for="humidity_sensor_name" class="" id="">Sensor Name</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{form.humidity_sensor_name}}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="col-md-2">
+                                        <label for="humidity_unit" class="" id="">Unit</label>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{form.humidity_unit}}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </fieldset>
+
+                        <br>
+
+                        <fieldset class="scheduler-border">
+                            <legend class="scheduler-border"><font color="blue"> Temperature</font></legend>
+                            <div class="form-group col-md-12">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label for="temperature_sensor_name" class="" id="">Sensor Name</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{form.temperature_sensor_name}}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="col-md-2">
+                                        <label for="temperature_unit" class="" id="">Unit</label>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{form.temperature_unit}}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </fieldset>
+
+                        <br>
+
+                        <fieldset class="scheduler-border">
+                            <legend class="scheduler-border"><font color="blue"> SO<sub>2</sub></font></legend>
+                            <div class="form-group col-md-12">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label for="so2_sensor_name" class="" id="">Sensor Name</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{form.so2_sensor_name}}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="col-md-2">
+                                        <label for="so2_unit" class="" id="">Unit</label>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{form.so2_unit}}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </fieldset>
+
+                        <br>
+
+                        <fieldset class="scheduler-border">
+                            <legend class="scheduler-border"><font color="blue"> CO</font></legend>
+                            <div class="form-group col-md-12">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label for="co_sensor_name" class="" id="">Sensor Name</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{form.co_sensor_name}}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="col-md-2">
+                                        <label for="co_unit" class="" id="">Unit</label>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{form.co_unit}}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </fieldset>
+
+                        <br>
+                        <fieldset class="scheduler-border">
+                            <legend class="scheduler-border"><font color="blue"> NO<sub>2</sub></font></legend>
+                            <div class="form-group col-md-12">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label for="co_sensor_name" class="" id="">Sensor Name</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{form.no2_sensor_name}}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="col-md-2">
+                                        <label for="no2_unit" class="" id="">Unit</label>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{form.no2_unit}}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </fieldset>
+
+                        <br>
+
+
+
+                        <br/><br/>
+
+                        <div class="form-group col-md-12">
+
+                            <div class="col-md-6">
+                                <div class="col-md-12">
+                                    <div class="text-center">
+                                        <a class="btn btn-primary" href="{% url 'wm_test:start_save_sensor' %}">Start</a><br><br>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="col-md-8">
+                                    <div class="text-center">
+                                        <input type="submit" class="btn btn-primary" value="Submit"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div><!--end Table content -->
+        </section>
+    </div>
+</div>
+
+
+<style>
+    fieldset.scheduler-border {
+    border: solid 1px #DDD !important;
+    padding: 0 10px 10px 10px;
+    border-bottom: none;
+}
+
+legend.scheduler-border {
+    width: auto !important;
+    border: none;
+    font-size: 14px;
+}
+fieldset ul {list-style:none}
+
+.form-border{
+      box-sizing: border-box;
+  border: 2px solid #DDD;
+  border-radius: 4px;
+      padding: 0 30px 10px 30px;
+}
+
+
+
+</style>
+<script>
+ $('#my').click(function()
+                    {
+    alert('9\xB0');
+    });
+$(function() {
+    $( ".datepicker" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "1900:2012",
+      // You can put more options here.
+
+    });
+  });
+
+$(document).ready(function(){
+    $("#id_mine").addClass('form-control');
+    $("#id_mining_role").addClass('form-control');
+    $("#id_immediate_staff").addClass('form-control');
+
+
+});
+
+</script>
+
+
+
+{% endblock %}
+

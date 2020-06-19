@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load staticfiles %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<div class="container">
+    <div class="row">
+        <section class="col-md-12">
+            <h1 class="page-header">Manage Sensor
+                <small>&nbsp&nbsp&nbspHere you can edit/delete basic info of Sensors</small>
+            </h1>
+            <div class="row text-center">
+
+            </div>
+            <!-- Table content -->
+            <div class="row">
+                <table class="table table-striped table-bordered table-sm">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Sensor ID</th>
+                            <th>Sensor Name</th>
+                            <th>Sensor Unit</th>
+                            <th>Min_Range</th>
+                            <th>Max_Range</th>
+                            <th>Desc</th>
+                            <th style="width:100px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for book in object_list %}
+                        <tr>
+                            <td>{{ book.sensor_id }}</td>
+                            <td>{{ book.sensor_name }}</td>
+                            <td>{{ book.sensor_unit }}</td>
+                            <td>{{ book.min_range }}</td>
+                            <td>{{ book.max_range }}</td>
+                            <td>{{ book.desc }}</td>
+                            <td style="width:100px;">
+                                &nbsp;&nbsp;<a href="{% url 'wm_test:edit' book.id %}"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp&nbsp&nbsp&nbsp
+                                <a href="{% url 'wm_test:delete' book.id %}"><span class="glyphicon glyphicon-trash"></span></a>
+                             </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div><!--end Table content -->
+        </section>
+    </div>
+</div>
+<style>
+
+
+
+
+</style>
+<script>
+
+
+
+
+</script>
+
+{% endblock %}
+

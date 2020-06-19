@@ -1,0 +1,589 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .margin_top{
+     margin-top: 15px;
+    }
+</style>
+<div class="container">
+    
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <div class="row">
+        <section class="col-md-12">
+            <h1 class="page-header">Live Report Graph</h1>
+            
+                
+                
+                <!--  --
+            </div>
+            <div class="row margin_top">
+                <div class="col-md-2">
+                    <label for="" class="" id="">Choose Sensor:</label>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-control" id="id_sensor_list">
+                        <option value="">--Select Sensor--</option>
+                    </select>
+                </div>
+                
+            </div>
+            <div class="row margin_top">
+                <div class="text-center">
+                    <input type="button" id="btn_show" class="btn btn-primary" value="Show"/>
+                </div>
+            </div>
+--  -->
+        </section>
+    </div>
+</div>
+<div class="container-fluid">
+   <div id="graphDiv1"></div>
+   <div id="graphDiv2"></div>
+   <div id="graphDiv3"></div>
+   <div id="graphDiv4"></div>
+   <div id="graphDiv5"></div>
+   <div id="graphDiv6"></div>
+   <div id="graphDiv7"></div>
+   <div id="graphDiv"></div>
+</div>
+<div id="graphDiv1"></div>
+<div id="graphDiv2"></div>
+<div id="graphDiv3"></div>
+<div id="graphDiv4"></div>
+<div id="graphDiv5"></div>
+<div id="graphDiv6"></div>
+<div id="graphDiv7"></div>
+<div id="graphDiv"></div>
+<div class="text-center">
+    <input class="btn btn-primary"hidden onclick="myFunction()" type="button" id="id_print" value="Print"/>
+        </div>
+        <br>
+        <br>
+        <br>
+<div id="a">
+</div>        
+
+ <script>
+  var time = new Date();
+  var layout = {
+  title: {
+    text:'RAINFALL',
+    font: {
+      size: 24,
+      color: '#56F1DF'
+    },
+  },  
+  xaxis: {
+    title: {
+      text: 'time',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    },
+  },
+  yaxis: {
+    title: {
+      text: 'mm',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    }
+  }
+};
+  Plotly.newPlot('graphDiv1', [{
+                            x: [],
+                            y: [],
+                            showlegend: true,
+                            mode: 'lines',
+                            name:"RAINFALL",
+                            line: {color: '#56F1DF'}   
+                          }], layout);  
+
+setInterval(function (){
+                $.ajax({
+                    url: "{% url 'wm_test:fetch_sensor_values_ajax' %}",
+                data: {
+                         'id':2
+                       },
+                    success: function(result){
+                      data=result.result;
+                       console.log(result);
+                       var time = new Date();
+                       var update = {
+                        x: [[time]],
+                        y: [[data[0]]]
+                      }
+                          var cnt = 0;
+                            Plotly.extendTraces('graphDiv1', update, [0])
+
+                            $("#id_print").show();      
+                    }
+                });
+      },1000);
+ </script>
+
+ 
+ <script>
+  var time = new Date();
+  var layout = {
+  title: {
+    text:'HUMIDITY',
+    font: {
+      size: 24,
+      color: '#CE0048'
+    },
+  },    
+  xaxis: {
+    title: {
+      text: 'time',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    },
+  },
+  yaxis: {
+    title: {
+      text: 'percentage',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    }
+  }
+};
+  Plotly.newPlot('graphDiv2', [{
+                            x: [],
+                            y: [],
+                            showlegend: true,
+                            mode: 'lines',
+                            name:"HUMIDITY",
+                            line: {color: '#CE0048'}   
+                          }], layout);  
+
+setInterval(function (){
+                $.ajax({
+                    url: "{% url 'wm_test:fetch_sensor_values_ajax' %}",
+                data: {
+                         'id':2
+                       },
+                    success: function(result){
+                      data=result.result;
+                       console.log(result);
+                       var time = new Date();
+                       var update = {
+                        x: [[time]],
+                        y: [[data[0]]]
+                      }
+                          var cnt = 0;
+                            Plotly.extendTraces('graphDiv2', update, [0]) 
+
+                            $("#id_print").show();     
+                    }
+                });
+      },1000);
+ </script>
+
+ <script>
+  var time = new Date();
+  var layout = {
+  title: {
+    text:'TEMPERATURE',
+    font: {
+      size: 24,
+      color: '#F41A25'
+    },
+  },    
+  xaxis: {
+    title: {
+      text: 'time',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    },
+  },
+  yaxis: {
+    title: {
+      text: 'celvin',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    }
+  }
+};
+  Plotly.newPlot('graphDiv3', [{
+                            x: [],
+                            y: [],
+                            showlegend: true,
+                            mode: 'lines',
+                            name:"TEMPERATURE",
+                            line: {color: '#F41A25'}   
+                          }], layout);  
+
+setInterval(function (){
+                $.ajax({
+                    url: "{% url 'wm_test:fetch_sensor_values_ajax' %}",
+                data: {
+                         'id':2
+                       },
+                    success: function(result){
+                      data=result.result;
+                       console.log(result);
+                       var time = new Date();
+                       var update = {
+                        x: [[time]],
+                        y: [[data[0]]]
+                      }
+                          var cnt = 0;
+                            Plotly.extendTraces('graphDiv3', update, [0])
+
+                            $("#id_print").show();      
+                    }
+                });
+      },1000);
+ </script>
+
+ <script>
+  var time = new Date();
+  var layout = {
+  title: {
+    text:'WIND SPEED',
+    font: {
+      size: 24,
+      color: '#9256F1'
+    },
+  },    
+  xaxis: {
+    title: {
+      text: 'time',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    },
+  },
+  yaxis: {
+    title: {
+      text: 'm/s',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    }
+  }
+};
+  Plotly.newPlot('graphDiv4', [{
+                            x: [],
+                            y: [],
+                            showlegend: true,
+                            mode: 'lines',
+                            name:"WIND SPEED",
+                            line: {color: '#9256F1'}   
+                          }], layout);  
+
+setInterval(function (){
+                $.ajax({
+                    url: "{% url 'wm_test:fetch_sensor_values_ajax' %}",
+                data: {
+                         'id':2
+                       },
+                    success: function(result){
+                      data=result.result;
+                       console.log(result);
+                       var time = new Date();
+                       var update = {
+                        x: [[time]],
+                        y: [[data[0]]]
+                      }
+                          var cnt = 0;
+                            Plotly.extendTraces('graphDiv4', update, [0])
+
+                            $("#id_print").show();      
+                    }
+                });
+      },1000);
+ </script>
+
+ <script>
+  var time = new Date();
+  var layout = {
+  title: {
+    text:'WIND DIRECTION',
+    font: {
+      size: 24,
+      color: '#68F156'
+    },
+  },    
+  xaxis: {
+    title: {
+      text: 'time',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    },
+  },
+  yaxis: {
+    title: {
+      text: 'degree',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    }
+  }
+};
+  Plotly.newPlot('graphDiv5', [{
+                            x: [],
+                            y: [],
+                            showlegend: true,
+                            mode: 'lines',
+                            name:"WIND DIRECTION",
+                            line: {color: '#68F156'}   
+                          }], layout);  
+
+setInterval(function (){
+                $.ajax({
+                    url: "{% url 'wm_test:fetch_sensor_values_ajax' %}",
+                data: {
+                         'id':2
+                       },
+                    success: function(result){
+                      data=result.result;
+                       console.log(result);
+                       var time = new Date();
+                       var update = {
+                        x: [[time]],
+                        y: [[data[0]]]
+                      }
+                          var cnt = 0;
+                            Plotly.extendTraces('graphDiv5', update, [0]) 
+
+                            $("#id_print").show();     
+                    }
+                });
+      },1000);
+ </script>
+
+<script>
+  var time = new Date();
+  var layout = {
+  title: {
+    text:'PM2.5    PM10<br>(Gases)</br>',
+    font: {
+      size: 24,
+      color: ''
+    },
+  },    
+  xaxis: {
+    title: {
+      text: 'time',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    },
+  },
+  yaxis: {
+    title: {
+      text: 'ug/m3',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    }
+  }
+};
+  Plotly.newPlot('graphDiv6', [{
+                            x: [],
+                            y: [],
+                            showlegend: true,
+                            mode: 'lines',
+                            name:"PM2.5",
+                            line: {color: '#9E3D64'}
+        }, {
+          x: [],
+                            y: [],
+                            showlegend: true,
+                            mode: 'lines',
+                            name:"PM10",
+                            line: {color: '#4737AD'}   
+                          }], layout);  
+
+setInterval(function (){
+                $.ajax({
+                    url: "{% url 'wm_test:fetch_sensor_values_ajax' %}",
+                data: {
+                         'id':2
+                       },
+                    success: function(result){
+                      data=result.result;
+                       console.log(result);
+                       var time = new Date();
+                       var update = {
+                        x: [[time], [time]],
+                        y: [[data[0]], [data[1]]]
+                      }
+                          var cnt = 0;
+                            Plotly.extendTraces('graphDiv6', update, [0, 1]) 
+
+                            $("#id_print").show();     
+                    }
+                });
+      },1000);
+ </script>
+
+ 
+
+
+ <script>
+  var time = new Date();
+  var layout = {
+  title: {
+    text:'SO2    NO2<br>(Gases)</br>',
+    font: {
+      size: 24,
+      color: ''   
+    },
+  },    
+  xaxis: {
+    title: {
+      text: 'time',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    },
+  },
+  yaxis: {
+    title: {
+      text: 'ug/m3',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    }
+  }
+};
+  Plotly.newPlot('graphDiv7', [{
+                            x: [],
+                            y: [],
+                            showlegend: true,
+                            mode: 'lines',
+                            name:"SO2",
+                            line: {color: '#80CAF6'}   //here calling of above these define fn. in two(graphdiv,data and layout);
+                          }, {
+                            x: [],
+                            y: [],
+                            showlegend: true,
+                            mode: 'lines',
+                            name:"NO2",
+                            line: {color: '#DF56F1'}
+                          }], layout);
+
+setInterval(function (){
+                $.ajax({
+                    url: "{% url 'wm_test:fetch_sensor_values_ajax' %}",
+                data: {
+                         'id':2
+                       },
+                    success: function(result){
+                      data=result.result;
+                       console.log(result);
+                       var time = new Date();
+                      var update = {
+                        x: [[time], [time]],
+                        y: [[data[0]], [data[1]]]
+                      }
+                          var cnt = 0;
+                            Plotly.extendTraces('graphDiv7', update, [0, 1])
+
+                            $("#id_print").show();
+                    }
+                });
+      },1000);
+
+</script>
+
+<script>
+  var time = new Date();
+  var layout = {
+  title: {
+    text:'CO<br>(Gas)</br>',
+    font: {
+      size: 24,
+      color: ''
+    },
+  },    
+  xaxis: {
+    title: {
+      text: 'time',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    },
+  },
+  yaxis: {
+    title: {
+      text: 'mg/m3',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    }
+  }
+};
+  Plotly.newPlot('graphDiv', [{
+                            x: [],
+                            y: [],
+                            showlegend: true,
+                            mode: 'lines',
+                            name:"CO",
+                            line: {color: '#F08080'}   
+                          }], layout);  
+
+setInterval(function (){
+                $.ajax({
+                    url: "{% url 'wm_test:fetch_sensor_values_ajax' %}",
+                data: {
+                         'id':2
+                       },
+                    success: function(result){
+                      data=result.result;
+                       console.log(result);
+                       var time = new Date();
+                       var update = {
+                        x: [[time]],
+                        y: [[data[0]]]
+                      }
+                          var cnt = 0;
+                            Plotly.extendTraces('graphDiv', update, [0]) 
+
+                            $("#id_print").show();     
+                    }
+                });
+      },1000);
+
+function myFunction() {
+  window.print();
+}
+
+
+ </script>
+
+</body>
+</html>  
+
+</script>
+<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+
+{% endblock %}

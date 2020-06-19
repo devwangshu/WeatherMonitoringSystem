@@ -1,0 +1,1127 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load staticfiles %}
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+
+<div class="container">
+    <div class="row">
+        <section class="col-md-12">
+            <h1 class="page-header">Date And Hour Duration Avg Report Graph
+              <!--  <small>&nbsp&nbsp&nbspHere you can add/edit sensor details</small>-->
+            </h1>
+            <!-- Table content -->
+            <div class="form-border">
+                <div class="row">
+
+                    <form class="form-horizontal" method="post" enctype="multipart/form-data">{% csrf_token %}
+
+                        <br><br>
+
+                          <div class="form-group col-md-12">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label for="from_date" class="" >From Date</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control datepicker" id="date1">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label for="to_date" class="" >To Date</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control datepicker" id="date2">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                             <div class="form-group col-md-12">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label for="from_date" class="" >From Time</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                                 <select name = "time1" id="time1" class="form-control">
+                                                   <option value = "">--------</option>
+                                                    <option value = "00">00</option>
+                                                    <option value = "01">01 </option>
+                                                    <option value = "02">02 </option>
+                                                    <option value = "03">03 </option>
+                                                    <option value = "04">04 </option>
+                                                    <option value = "05">05 </option>
+                                                    <option value = "06">06 </option>
+                                                    <option value = "07">07 </option>
+                                                    <option value = "08">08 </option>
+                                                    <option value = "09">09 </option>
+                                                    <option value = "10">10 </option>
+                                                    <option value = "11">11 </option>
+                                                    <option value = "12">12 </option>
+                                                    <option value = "13">13 </option>
+                                                    <option value = "14">14 </option>
+                                                    <option value = "15">15 </option>
+                                                    <option value = "16">16 </option>
+                                                    <option value = "17">17 </option>
+                                                    <option value = "18">18 </option>
+                                                    <option value = "19">19 </option>
+                                                    <option value = "20">20 </option>
+                                                    <option value = "21">21 </option>
+                                                    <option value = "22">22 </option>
+                                                    <option value = "23">23 </option>
+
+                                                 </select>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label for="to_date" class="">To Time</label>
+                                        </label>
+                                    </div>
+                              <div class="col-md-8">
+                                                 <select name = "time2" id="time2" class="form-control">
+                                                   <option value = "">--------</option>
+                                                    <option value = "00">00</option>
+                                                    <option value = "01">01 </option>
+                                                    <option value = "02">02 </option>
+                                                    <option value = "03">03 </option>
+                                                    <option value = "04">04 </option>
+                                                    <option value = "05">05 </option>
+                                                    <option value = "06">06 </option>
+                                                    <option value = "07">07 </option>
+                                                    <option value = "08">08 </option>
+                                                    <option value = "09">09 </option>
+                                                    <option value = "10">10 </option>
+                                                    <option value = "11">11 </option>
+                                                    <option value = "12">12 </option>
+                                                    <option value = "13">13 </option>
+                                                    <option value = "14">14 </option>
+                                                    <option value = "15">15 </option>
+                                                    <option value = "16">16 </option>
+                                                    <option value = "17">17 </option>
+                                                    <option value = "18">18 </option>
+                                                    <option value = "19">19 </option>
+                                                    <option value = "20">20 </option>
+                                                    <option value = "21">21 </option>
+                                                    <option value = "22">22 </option>
+                                                    <option value = "23">23 </option>
+
+                                                 </select>
+
+                                    </div>
+                                 </div>
+                            </div>
+                        <br/><br/>
+                        <br/><br/>
+                        <div class="form-group col-md-12">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="text-center">
+                                        <input class="btn btn-primary" type="button" id="id_show" value="Show"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div><!--end Table content -->
+
+        </section>
+    </div>
+</div>
+
+
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <section class="col-md-12">
+            <!-- Table content -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="content">
+              <tbody id="results"></tbody>
+                        </table>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </div>
+            <!--end Table content -->
+        </section>
+  </div>
+</div>
+
+<style>
+    fieldset.scheduler-border {
+    border: solid 1px #DDD !important;
+    padding: 0 10px 10px 10px;
+    border-bottom: none;
+}
+
+legend.scheduler-border {
+    width: auto !important;
+    border: none;
+    font-size: 14px;
+}
+fieldset ul {list-style:none}
+
+.form-border{
+      box-sizing: border-box;
+  border: 2px solid #DDD;
+  border-radius: 4px;
+      padding: 0 30px 10px 30px;
+}
+</style>
+    </div>
+</div>
+<div class="container-fluid">
+   <div id="graphDiv1"></div>
+   <div id="graphDiv2"></div>
+   <div id="graphDiv3"></div>
+   <div id="graphDiv4"></div>
+   <div id="graphDiv5"></div>
+   <div id="graphDiv6"></div>
+   <div id="graphDiv7"></div>
+   <div id="graphDiv"></div>
+</div>
+<div id="graphDiv1"></div>
+<div id="graphDiv2"></div>
+<div id="graphDiv3"></div>
+<div id="graphDiv4"></div>
+<div id="graphDiv5"></div>
+<div id="graphDiv6"></div>
+<div id="graphDiv7"></div>
+<div id="graphDiv"></div>
+<div class="text-center">
+    <input class="btn btn-primary"hidden onclick="myFunction()" type="button" id="id_print" value="Print"/>
+        </div>
+        <br>
+        <br>
+        <br>
+<div id="a">
+</div>
+
+
+</style>
+
+
+<script>
+ $('#my').click(function()
+                    {
+    alert('9\xB0');
+    });
+$(function() {
+    $( "#date1" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "1900:2020",
+      // You can put more options here.
+
+    });
+  });
+
+$(function() {
+    $( "#date1" ).datepicker({
+      format: 'dd-mm-yyyy'
+      // You can put more options here.
+
+    });
+  });
+
+$(function() {
+    $( "#date2" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "1900:2020",
+      // You can put more options here.
+
+    });
+  });
+
+$(function() {
+    $( "#date2" ).datepicker({
+      format: 'dd-mm-yyyy'
+      // You can put more options here.
+
+    });
+  });
+
+
+
+$("#id_show").click(function(){
+ var date1 =$('#date1').val();
+ var date2 =$('#date2').val();
+ var time1=$('#time1').val();
+ var time2=$('#time2').val();
+
+ var split_date1 =date1.split("/");
+ var year1 = split_date1[2];
+ var month1 = split_date1[0];
+ var day1 = split_date1[1];
+ var newDate1 = year1 + "-" + month1 + "-" + day1;
+
+ var split_date2 =date2.split("/");
+ var year2 = split_date2[2];
+ var month2 = split_date2[0];
+ var day2 = split_date2[1];
+ var newDate2 = year2 + "-" + month2 + "-" + day2;
+
+ //alert(time1);
+ var tym=00;
+ var newTime1 = time1 + ":" + tym+tym+":"+tym+tym+"."+tym+tym+tym+tym+tym+tym;
+ var newTime2 = time2 + ":" + tym+tym+":"+tym+tym+"."+tym+tym+tym+tym+tym+tym;
+ <!--alert(newDate1);-->
+ <!--alert(newDate2);-->
+ <!--alert(newTime1);-->
+ <!--alert(newTime2);--> 
+
+  var layout = {
+  title: {
+    text:'RAINFALL',
+    font: {
+      size: 24,
+      color: '#56F1DF'
+    },
+  },  
+  xaxis: {
+    title: {
+      text: 'time',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    },
+  },
+  yaxis: {
+    title: {
+      text: 'mm',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    }
+  }
+};
+                $.ajax({
+            type:"get",
+             url: "{% url 'wm_test:fetch_show_date_and_hour_duration_avg_report_graph_ajax' %}",
+                data: {
+                         'from_date':newDate1,
+                         'to_date':newDate2,
+                         'from_time':newTime1,
+                         'to_time':newTime2,
+                       },
+                success: function(data) {
+                      data=data.result;
+                      console.log(data);
+                      var GraphdataX=[];
+                      var GraphdataY=[];
+                      
+                      data=data[0];
+                      for (d in data) {
+                          var tempData=data[d];
+                          tempData=tempData[0];
+                          GraphdataX.push(tempData[1]);
+                          GraphdataY.push(tempData[2]);
+                          
+                        }
+                          
+                      
+                      
+                      // console.log(GraphdataX);
+                      // console.log(GraphdataY1);
+                    
+
+                        Plotly.newPlot('graphDiv1', [{
+                            x: GraphdataX,
+                            y: GraphdataY,
+                            showlegend: true,
+                            mode: 'lines',
+                            name:"RAINFALL",
+                            line: {color: '#56F1DF'}   
+                          }], layout);
+
+                        $("#id_print").show();    
+                      }
+                      
+                    
+                });
+     
+
+   });
+ </script>
+
+ 
+
+ <script>
+ $("#id_show").click(function(){
+ var date1 =$('#date1').val();
+ var date2 =$('#date2').val();
+ var time1=$('#time1').val();
+ var time2=$('#time2').val();
+
+ var split_date1 =date1.split("/");
+ var year1 = split_date1[2];
+ var month1 = split_date1[0];
+ var day1 = split_date1[1];
+ var newDate1 = year1 + "-" + month1 + "-" + day1;
+
+ var split_date2 =date2.split("/");
+ var year2 = split_date2[2];
+ var month2 = split_date2[0];
+ var day2 = split_date2[1];
+ var newDate2 = year2 + "-" + month2 + "-" + day2;
+
+ //alert(time1);
+ var tym=00;
+ var newTime1 = time1 + ":" + tym+tym+":"+tym+tym+"."+tym+tym+tym+tym+tym+tym;
+ var newTime2 = time2 + ":" + tym+tym+":"+tym+tym+"."+tym+tym+tym+tym+tym+tym;
+ <!--alert(newDate1);-->
+ <!--alert(newDate2);-->
+ <!--alert(newTime1);-->
+ <!--alert(newTime2);-->  
+  var layout = {
+  title: {
+    text:'HUMIDITY',
+    font: {
+      size: 24,
+      color: '#CE0048'
+    },
+  },  
+  xaxis: {
+    title: {
+      text: 'time',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    },
+  },
+  yaxis: {
+    title: {
+      text: 'percentage',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    }
+  }
+};
+                $.ajax({
+            type:"get",
+             url: "{% url 'wm_test:fetch_show_date_and_hour_duration_avg_report_graph_ajax' %}",
+                data: {
+                         'from_date':newDate1,
+                         'to_date':newDate2,
+                         'from_time':newTime1,
+                         'to_time':newTime2,
+                       },
+                success: function(data) {
+                      data=data.result;
+                      console.log(data);
+                      var GraphdataX=[];
+                      var GraphdataY=[];
+                      
+                      data=data[0];
+                      for (d in data) {
+                          var tempData=data[d];
+                          tempData=tempData[0];
+                          GraphdataX.push(tempData[1]);
+                          GraphdataY.push(tempData[3]);
+                          
+                        }
+                          
+                      
+                      
+                      // console.log(GraphdataX);
+                      // console.log(GraphdataY1);
+                    
+
+                        Plotly.newPlot('graphDiv2', [{
+                            x: GraphdataX,
+                            y: GraphdataY,
+                            showlegend: true,
+                            mode: 'lines',
+                            name:"HUMIDITY",
+                            line: {color: '#CE0048'}   
+                          }], layout);
+
+                        $("#id_print").show();
+                            
+                      }
+                      
+                    
+                });
+     
+
+   });
+ </script> 
+
+ <script>
+ $("#id_show").click(function(){
+ var date1 =$('#date1').val();
+ var date2 =$('#date2').val();
+ var time1=$('#time1').val();
+ var time2=$('#time2').val();
+
+ var split_date1 =date1.split("/");
+ var year1 = split_date1[2];
+ var month1 = split_date1[0];
+ var day1 = split_date1[1];
+ var newDate1 = year1 + "-" + month1 + "-" + day1;
+
+ var split_date2 =date2.split("/");
+ var year2 = split_date2[2];
+ var month2 = split_date2[0];
+ var day2 = split_date2[1];
+ var newDate2 = year2 + "-" + month2 + "-" + day2;
+
+ //alert(time1);
+ var tym=00;
+ var newTime1 = time1 + ":" + tym+tym+":"+tym+tym+"."+tym+tym+tym+tym+tym+tym;
+ var newTime2 = time2 + ":" + tym+tym+":"+tym+tym+"."+tym+tym+tym+tym+tym+tym;
+ <!--alert(newDate1);-->
+ <!--alert(newDate2);-->
+ <!--alert(newTime1);-->
+ <!--alert(newTime2);-->  
+  var layout = {
+  title: {
+    text:'TEMPERATURE',
+    font: {
+      size: 24,
+      color: '#F41A25'
+    },
+  },  
+  xaxis: {
+    title: {
+      text: 'time',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    },
+  },
+  yaxis: {
+    title: {
+      text: 'celvin',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    }
+  }
+};
+                $.ajax({
+            type:"get",
+             url: "{% url 'wm_test:fetch_show_date_and_hour_duration_avg_report_graph_ajax' %}",
+                data: {
+                         'from_date':newDate1,
+                         'to_date':newDate2,
+                         'from_time':newTime1,
+                         'to_time':newTime2,
+                       },
+                success: function(data) {
+                      data=data.result;
+                      console.log(data);
+                      var GraphdataX=[];
+                      var GraphdataY=[];
+                      
+                      data=data[0];
+                      for (d in data) {
+                          var tempData=data[d];
+                          tempData=tempData[0];
+                          GraphdataX.push(tempData[1]);
+                          GraphdataY.push(tempData[4]);
+                          
+                        }
+                          
+                      
+                      
+                      // console.log(GraphdataX);
+                      // console.log(GraphdataY1);
+                    
+
+                        Plotly.newPlot('graphDiv3', [{
+                            x: GraphdataX,
+                            y: GraphdataY,
+                            showlegend: true,
+                            mode: 'lines',
+                            name:"TEMPERATURE",
+                            line: {color: '#F41A25'}   
+                          }], layout);
+
+                        $("#id_print").show();
+                            
+                      }
+                      
+                    
+                });
+     
+
+   });
+ </script>
+
+ <script>
+ $("#id_show").click(function(){
+ var date1 =$('#date1').val();
+ var date2 =$('#date2').val();
+ var time1=$('#time1').val();
+ var time2=$('#time2').val();
+
+ var split_date1 =date1.split("/");
+ var year1 = split_date1[2];
+ var month1 = split_date1[0];
+ var day1 = split_date1[1];
+ var newDate1 = year1 + "-" + month1 + "-" + day1;
+
+ var split_date2 =date2.split("/");
+ var year2 = split_date2[2];
+ var month2 = split_date2[0];
+ var day2 = split_date2[1];
+ var newDate2 = year2 + "-" + month2 + "-" + day2;
+
+ //alert(time1);
+ var tym=00;
+ var newTime1 = time1 + ":" + tym+tym+":"+tym+tym+"."+tym+tym+tym+tym+tym+tym;
+ var newTime2 = time2 + ":" + tym+tym+":"+tym+tym+"."+tym+tym+tym+tym+tym+tym;
+ <!--alert(newDate1);-->
+ <!--alert(newDate2);-->
+ <!--alert(newTime1);-->
+ <!--alert(newTime2);-->  
+  var layout = {
+  title: {
+    text:'WIND SPEED',
+    font: {
+      size: 24,
+      color: '#9256F1'
+    },
+  },  
+  xaxis: {
+    title: {
+      text: 'time',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    },
+  },
+  yaxis: {
+    title: {
+      text: 'm/s',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    }
+  }
+};
+                $.ajax({
+            type:"get",
+             url: "{% url 'wm_test:fetch_show_date_and_hour_duration_avg_report_graph_ajax' %}",
+                data: {
+                         'from_date':newDate1,
+                         'to_date':newDate2,
+                         'from_time':newTime1,
+                         'to_time':newTime2,
+                       },
+                success: function(data) {
+                      data=data.result;
+                      console.log(data);
+                      var GraphdataX=[];
+                      var GraphdataY=[];
+                      
+                      data=data[0];
+                      for (d in data) {
+                          var tempData=data[d];
+                          tempData=tempData[0];
+                          GraphdataX.push(tempData[1]);
+                          GraphdataY.push(tempData[5]);
+                          
+                        }
+                          
+                      
+                      
+                      // console.log(GraphdataX);
+                      // console.log(GraphdataY1);
+                    
+
+                        Plotly.newPlot('graphDiv4', [{
+                            x: GraphdataX,
+                            y: GraphdataY,
+                            showlegend: true,
+                            mode: 'lines',
+                            name:"WIND SPEED",
+                            line: {color: '#9256F1'}   
+                          }], layout);
+
+                        $("#id_print").show();
+                            
+                      }
+                      
+                    
+                });
+     
+
+   });
+ </script>
+
+ <script>
+ $("#id_show").click(function(){
+ var date1 =$('#date1').val();
+ var date2 =$('#date2').val();
+ var time1=$('#time1').val();
+ var time2=$('#time2').val();
+
+ var split_date1 =date1.split("/");
+ var year1 = split_date1[2];
+ var month1 = split_date1[0];
+ var day1 = split_date1[1];
+ var newDate1 = year1 + "-" + month1 + "-" + day1;
+
+ var split_date2 =date2.split("/");
+ var year2 = split_date2[2];
+ var month2 = split_date2[0];
+ var day2 = split_date2[1];
+ var newDate2 = year2 + "-" + month2 + "-" + day2;
+
+ //alert(time1);
+ var tym=00;
+ var newTime1 = time1 + ":" + tym+tym+":"+tym+tym+"."+tym+tym+tym+tym+tym+tym;
+ var newTime2 = time2 + ":" + tym+tym+":"+tym+tym+"."+tym+tym+tym+tym+tym+tym;
+ <!--alert(newDate1);-->
+ <!--alert(newDate2);-->
+ <!--alert(newTime1);-->
+ <!--alert(newTime2);-->  
+  var layout = {
+  title: {
+    text:'WIND DIRECTION',
+    font: {
+      size: 24,
+      color: '#68F156'
+    },
+  },  
+  xaxis: {
+    title: {
+      text: 'time',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    },
+  },
+  yaxis: {
+    title: {
+      text: 'degree',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    }
+  }
+};
+                $.ajax({
+            type:"get",
+             url: "{% url 'wm_test:fetch_show_date_and_hour_duration_avg_report_graph_ajax' %}",
+                data: {
+                         'from_date':newDate1,
+                         'to_date':newDate2,
+                         'from_time':newTime1,
+                         'to_time':newTime2,
+                       },
+                success: function(data) {
+                      data=data.result;
+                      console.log(data);
+                      var GraphdataX=[];
+                      var GraphdataY=[];
+                      
+                      data=data[0];
+                      for (d in data) {
+                          var tempData=data[d];
+                          tempData=tempData[0];
+                          GraphdataX.push(tempData[1]);
+                          GraphdataY.push(tempData[6]);
+                          
+                        }
+                          
+                      
+                      
+                      // console.log(GraphdataX);
+                      // console.log(GraphdataY1);
+                    
+
+                        Plotly.newPlot('graphDiv5', [{
+                            x: GraphdataX,
+                            y: GraphdataY,
+                            showlegend: true,
+                            mode: 'lines',
+                            name:"WIND DIRECTION",
+                            line: {color: '#68F156'}   
+                          }], layout);
+
+                        $("#id_print").show();
+                            
+                      }
+                      
+                    
+                });
+     
+
+   });
+ </script>
+
+<script>
+ $("#id_show").click(function(){
+ var date1 =$('#date1').val();
+ var date2 =$('#date2').val();
+ var time1=$('#time1').val();
+ var time2=$('#time2').val();
+
+ var split_date1 =date1.split("/");
+ var year1 = split_date1[2];
+ var month1 = split_date1[0];
+ var day1 = split_date1[1];
+ var newDate1 = year1 + "-" + month1 + "-" + day1;
+
+ var split_date2 =date2.split("/");
+ var year2 = split_date2[2];
+ var month2 = split_date2[0];
+ var day2 = split_date2[1];
+ var newDate2 = year2 + "-" + month2 + "-" + day2;
+
+ //alert(time1);
+ var tym=00;
+ var newTime1 = time1 + ":" + tym+tym+":"+tym+tym+"."+tym+tym+tym+tym+tym+tym;
+ var newTime2 = time2 + ":" + tym+tym+":"+tym+tym+"."+tym+tym+tym+tym+tym+tym;
+ <!--alert(newDate1);-->
+ <!--alert(newDate2);-->
+ <!--alert(newTime1);-->
+ <!--alert(newTime2);-->  
+  var layout = {
+  title: {
+    text:'PM2.5    PM10<br>(Gases)</br>',
+    font: {
+      size: 24,
+      color: ''
+    },
+  },  
+  xaxis: {
+    title: {
+      text: 'time',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    },
+  },
+  yaxis: {
+    title: {
+      text: 'ug/m3',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    }
+  }
+};
+                $.ajax({
+            type:"get",
+             url: "{% url 'wm_test:fetch_show_date_and_hour_duration_avg_report_graph_ajax' %}",
+                data: {
+                         'from_date':newDate1,
+                         'to_date':newDate2,
+                         'from_time':newTime1,
+                         'to_time':newTime2,
+                       },
+                success: function(data) {
+                      data=data.result;
+                      console.log(data);
+                      var GraphdataX=[];
+                      var GraphdataY1=[];
+          var GraphdataY2=[];
+                      
+                      data=data[0];
+                      for (d in data) {
+                          var tempData=data[d];
+                          tempData=tempData[0];
+                          GraphdataX.push(tempData[1]);
+                          GraphdataY1.push(tempData[7]);
+        GraphdataY2.push(tempData[8]);
+                          
+                        }
+                          
+                      
+                      
+                      // console.log(GraphdataX);
+                      // console.log(GraphdataY1);
+                    
+
+                        Plotly.newPlot('graphDiv6', [{
+                            x: GraphdataX,
+                            y: GraphdataY1,
+                            showlegend: true,
+                            mode: 'lines',
+                            name:"PM2.5",
+                            line: {color: '#9E3D64'}
+        }, {
+          x: GraphdataX,
+                            y: GraphdataY2,
+                            showlegend: true,
+                            mode: 'lines',
+                            name:"PM10",
+                            line: {color: '#4737AD'}   
+                          }], layout);
+
+                        $("#id_print").show();
+                            
+                      }
+                      
+                    
+                });
+     
+
+   });
+ </script>
+
+ 
+
+ <script>
+$("#id_show").click(function(){
+ var date1 =$('#date1').val();
+ var date2 =$('#date2').val();
+ var time1=$('#time1').val();
+ var time2=$('#time2').val();
+
+ var split_date1 =date1.split("/");
+ var year1 = split_date1[2];
+ var month1 = split_date1[0];
+ var day1 = split_date1[1];
+ var newDate1 = year1 + "-" + month1 + "-" + day1;
+
+ var split_date2 =date2.split("/");
+ var year2 = split_date2[2];
+ var month2 = split_date2[0];
+ var day2 = split_date2[1];
+ var newDate2 = year2 + "-" + month2 + "-" + day2;
+
+ //alert(time1);
+ var tym=00;
+ var newTime1 = time1 + ":" + tym+tym+":"+tym+tym+"."+tym+tym+tym+tym+tym+tym;
+ var newTime2 = time2 + ":" + tym+tym+":"+tym+tym+"."+tym+tym+tym+tym+tym+tym;
+ <!--alert(newDate1);-->
+ <!--alert(newDate2);-->
+ <!--alert(newTime1);-->
+ <!--alert(newTime2);-->
+  var layout = {
+  title: {
+    text:'SO2    NO2<br>(Gases)</br>',
+    font: {
+      size: 24,
+      color: ''   
+    },
+  },    
+  xaxis: {
+    title: {
+      text: 'time',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    },
+  },
+  yaxis: {
+    title: {
+      text: 'ug/m3',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    }
+  }
+};
+  
+                $.ajax({
+            type:"get",
+             url: "{% url 'wm_test:fetch_show_date_and_hour_duration_avg_report_graph_ajax' %}",
+                data: {
+                         'from_date':newDate1,
+                         'to_date':newDate2,
+                         'from_time':newTime1,
+                         'to_time':newTime2,
+                       },
+                success: function(data) {
+                      data=data.result;
+                      console.log(data);
+                      var GraphdataX=[];
+                      var GraphdataY1=[];
+                      var GraphdataY2=[];
+                      
+                      
+                      data=data[0];
+                      for (d in data) {
+                          var tempData=data[d];
+                          tempData=tempData[0];
+                          GraphdataX.push(tempData[1]);
+                          GraphdataY1.push(tempData[9]);
+                          GraphdataY2.push(tempData[10]);
+                          
+                        }
+                          
+                      
+                      
+                      // console.log(GraphdataX);
+                      // console.log(GraphdataY1);
+                    
+
+                        Plotly.newPlot('graphDiv7', [{
+                            x: GraphdataX,
+                            y: GraphdataY1,
+                            showlegend: true,
+                            mode: 'lines',
+                            name:"SO2",
+                            line: {color: '#80CAF6'}   //here calling of above these define fn. in two(graphdiv,data and layout);
+                          }, {
+                            x: GraphdataX,
+                            y: GraphdataY2,
+                            showlegend: true,
+                            mode: 'lines',
+                            name:"NO2",
+                            line: {color: '#DF56F1'}
+                          
+                          }], layout);
+
+                        $("#id_print").show();
+                      }
+                      
+                    
+                });
+     
+  }); 
+</script>
+
+<script>
+ $("#id_show").click(function(){
+ var date1 =$('#date1').val();
+ var date2 =$('#date2').val();
+ var time1=$('#time1').val();
+ var time2=$('#time2').val();
+
+ var split_date1 =date1.split("/");
+ var year1 = split_date1[2];
+ var month1 = split_date1[0];
+ var day1 = split_date1[1];
+ var newDate1 = year1 + "-" + month1 + "-" + day1;
+
+ var split_date2 =date2.split("/");
+ var year2 = split_date2[2];
+ var month2 = split_date2[0];
+ var day2 = split_date2[1];
+ var newDate2 = year2 + "-" + month2 + "-" + day2;
+
+ //alert(time1);
+ var tym=00;
+ var newTime1 = time1 + ":" + tym+tym+":"+tym+tym+"."+tym+tym+tym+tym+tym+tym;
+ var newTime2 = time2 + ":" + tym+tym+":"+tym+tym+"."+tym+tym+tym+tym+tym+tym;
+ <!--alert(newDate1);-->
+ <!--alert(newDate2);-->
+ <!--alert(newTime1);-->
+ <!--alert(newTime2);-->  
+  var layout = {
+  title: {
+    text:'CO<br>(Gas)</br>',
+    font: {
+      size: 24,
+      color: ''
+    },
+  },  
+  xaxis: {
+    title: {
+      text: 'time',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    },
+  },
+  yaxis: {
+    title: {
+      text: 'mg/m3',
+      font: {
+        size: 18,
+        color: '#7f7f7f'
+      }
+    }
+  }
+};
+                $.ajax({
+            type:"get",
+             url: "{% url 'wm_test:fetch_show_date_and_hour_duration_avg_report_graph_ajax' %}",
+                data: {
+                         'from_date':newDate1,
+                         'to_date':newDate2,
+                         'from_time':newTime1,
+                         'to_time':newTime2,
+                       },
+                success: function(data) {
+                      data=data.result;
+                      console.log(data);
+                      var GraphdataX=[];
+                      var GraphdataY=[];
+                      
+                      data=data[0];
+                      for (d in data) {
+                          var tempData=data[d];
+                          tempData=tempData[0];
+                          GraphdataX.push(tempData[1]);
+                          GraphdataY.push(tempData[11]);
+                          
+                        }
+                          
+                      
+                      
+                      // console.log(GraphdataX);
+                      // console.log(GraphdataY1);
+                    
+
+                        Plotly.newPlot('graphDiv', [{
+                            x: GraphdataX,
+                            y: GraphdataY,
+                            showlegend: true,
+                            mode: 'lines',
+                            name:"CO",
+                            line: {color: '#F08080'}   
+                          }], layout);
+
+                        $("#id_print").show();
+                            
+                      }
+                      
+                    
+                });
+     
+
+   });
+    
+  
+function myFunction() {
+  window.print();
+}
+
+
+
+</script>
+
+</body>
+</html>   
+
+</script>
+<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+
+{% endblock %}
